@@ -1,0 +1,23 @@
+{
+  "name": "castle-explorer-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hjrdave/castle-explorer-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hjrdave/castle-explorer-game/issues"
+  },
+  "homepage": "https://github.com/hjrdave/castle-explorer-game#readme",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
