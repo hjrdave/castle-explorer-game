@@ -10,29 +10,27 @@ var Game = /** @class */ (function () {
     function Game() {
         var _this = this;
         this.gameOver = wordArt_1.gameOver;
-        this.ask = function (question) {
-            var input = prompt(question);
-            return input;
+        this.ask = function (question, expectedFeedback) {
+            var answer = prompt(question);
+            if (!expectedFeedback.includes(answer)) {
+                _this.speak('I did not understand your answer...');
+                _this.ask(question, expectedFeedback);
+            }
+            return answer;
         };
-        this.getInput = function () {
-            var answer = _this.ask('Start Game? (Yes/No)');
+        this.speak = function (text) {
+            console.log("\n\n    ".concat(text, "\n        \n        "));
+        };
+        this.startGame = function () {
+            _this.speak(wordArt_1.title);
+            _this.speak(wordArt_1.startDescription);
+            var answer = _this.ask('Start Game? (Yes/No)', ['Yes', 'No']);
             if (answer === 'Yes') {
                 _this.speak('Starting game.......');
             }
-            else if (answer === 'No') {
-                _this.speak('Then why are you wasting my time loser....');
-            }
             else {
-                _this.speak('I did not understand that.');
+                _this.speak('That makes me sad.......');
             }
-        };
-        this.speak = function (text) {
-            console.log(text);
-        };
-        this.start = function () {
-            _this.speak(wordArt_1.title);
-            _this.speak(wordArt_1.startDescription);
-            _this.getInput();
         };
         this.end = function () {
             process.stdout.write('\u001b[H\u001b[2J\u001b[3J');

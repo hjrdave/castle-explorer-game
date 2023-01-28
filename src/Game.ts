@@ -7,31 +7,32 @@ export default class Game {
 
     private gameOver = gameOver;
 
-    ask = (question: string) => {
-        const input = prompt(question);
-        return input;
-    }
-
-    getInput = () => {
-        const answer = this.ask('Start Game? (Yes/No)');
-        if (answer === 'Yes') {
-            this.speak('Starting game.......');
-        } else if (answer === 'No') {
-            this.speak('Then why are you wasting my time loser....')
+    ask = (question: string, expectedFeedback: string[]) => {
+        const answer = prompt(question);
+        if (!expectedFeedback.includes(answer)) {
+            this.speak('I did not understand your answer...');
+            this.ask(question, expectedFeedback);
         }
-        else {
-            this.speak('I did not understand that.')
-        }
+        return answer;
     }
 
     speak = (text: string) => {
-        console.log(text);
+        console.log(`
+
+    ${text}
+        
+        `);
     }
 
-    start = () => {
+    startGame = () => {
         this.speak(title);
         this.speak(startDescription);
-        this.getInput();
+        const answer = this.ask('Start Game? (Yes/No)', ['Yes', 'No']);
+        if (answer === 'Yes') {
+            this.speak('Starting game.......');
+        } else {
+            this.speak('That makes me sad.......');
+        }
     };
     end = () => {
         process.stdout.write('\u001b[H\u001b[2J\u001b[3J');
