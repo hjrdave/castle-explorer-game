@@ -1,17 +1,26 @@
 import { title, startDescription, gameOver } from "./wordArt";
+import Player from "./Player";
 import promptSync from 'prompt-sync';
-
-const prompt = promptSync();
-
 export default class Game {
 
-    private gameOver = gameOver;
+    private player: Player;
 
-    ask = (question: string, expectedFeedback: string[]) => {
+    setPlayerName = (name: string) => {
+        this.player.setName(name);
+    }
+
+    getPlayerName = () => {
+        return this.player.sayName();
+    }
+
+    ask = (question: string, expectedFeedback?: string[]) => {
+        const prompt = promptSync();
         const answer = prompt(question);
-        if (!expectedFeedback.includes(answer)) {
-            this.speak('I did not understand your answer...');
-            this.ask(question, expectedFeedback);
+        if (expectedFeedback) {
+            if (!expectedFeedback.includes(answer)) {
+                this.speak('I did not understand your answer...');
+                this.ask(question, expectedFeedback);
+            }
         }
         return answer;
     }
@@ -30,16 +39,15 @@ export default class Game {
         const answer = this.ask('Start Game? (Yes/No)', ['Yes', 'No']);
         if (answer === 'Yes') {
             this.speak('Starting game.......');
+            const playerName = this.ask('What is your name?', []);
+            return playerName;
         } else {
             this.speak('That makes me sad.......');
+            this.startGame();
         }
-    };
-    end = () => {
-        process.stdout.write('\u001b[H\u001b[2J\u001b[3J');
-        this.speak(this.gameOver);
     };
 
     constructor() {
-
+        this.player = new Player();
     }
 }
