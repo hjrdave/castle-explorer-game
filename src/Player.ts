@@ -1,15 +1,26 @@
 export default class Player {
 
     private name: string;
-    private inv: string[];
+    private items: any;
 
-    public sayName = () => (this.name);
     public setName = (name: string) => {
         name = this.name;
+    }
+    public sayName = () => (this.name);
+    public pickupItem = () => {
+
+    }
+    public viewInventory = () => {
+
+    }
+    public dropItem = () => {
+
+    }
+    public lookAround = () => {
+
     }
 
     constructor() {
         this.name = '';
-        this.inv = [];
     }
 }
